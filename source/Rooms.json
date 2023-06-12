@@ -1,0 +1,46 @@
+[
+  [
+    {
+      "Name": "Foyer",
+      "Description": "There's a coat hook on the wall."
+    },
+    {
+      "Name": "Kitchen",
+      "Description": "You see a tidy, cozy kitchen."
+    },
+    {
+      "Name": "Dining Room",
+      "Description": "You see a table set for dinner."
+    }
+  ],
+  [
+    {
+      "Name": "Living Room",
+      "Description": "You are in the living room."
+    },
+    {
+      "Name": "Bedroom",
+      "Description": "You see a bed, a dresser, and a mirror."
+    },
+    {
+      "Name": "Bathroom",
+      "Description": "You are in the bathroom. You see a toilet and a vanity."
+    }
+
+  ],
+  [
+    {
+      "Name": "Game Room",
+      "Description": "There is a chess set on a table with two chairs on either side."
+    },
+    {
+      "Name": "Laundry Room",
+      "Description": "You see a washer and dryer."
+    },
+    {
+      "Name": "Porch",
+      "Description": "A rubber mat saying 'Welcome to Zork!' lies by the door."
+    }
+
+  ]
+]

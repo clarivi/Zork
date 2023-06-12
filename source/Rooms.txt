@@ -1,0 +1,9 @@
+Foyer#There's a coat hook on the wall.
+Kitchen#You see a tidy, cozy kitchen.
+Dining Room#You see a table set for dinner.
+Living Room#You are in the living room.
+Bedroom#You see a bed, a dresser, and a mirror.
+Bathroom#You are in the bathroom. You see a toilet and a vanity.
+Game Room#There is a chess set on a table with two chairs on either side.
+Laundry Room#You see a washer and dryer.
+Porch#A rubber mat saying 'Welcome to Zork!' lies by the door.

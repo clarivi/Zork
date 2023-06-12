@@ -12,7 +12,7 @@ int main()
 
     cout << "Welcome to Zork!\n\n";
 
-    Game game;
+    Game game("Rooms.json");
     game.Run();
 
     cout << "\n";

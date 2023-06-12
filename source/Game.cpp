@@ -3,16 +3,21 @@
 #include <map>
 #include <algorithm>
 #include <iostream>
+#include <fstream>
+#include "Utility.h"
+#include <cassert>
+#include <json/json.h>
+
 
 
 using namespace std;
 
 namespace Zork
 {
-    Game::Game()
+    Game::Game(const string& roomsFilename)
     {
         SpawnPlayer();
-        InitializeDescriptions();
+        InitializeDescriptions(roomsFilename);
     }
 
     //random number generation 
@@ -160,7 +165,7 @@ namespace Zork
         _locationColumn = _uniformDistribution(_randomGenerator);
     }
 
-    void Game::InitializeDescriptions()
+    void Game::InitializeDescriptions(const string& roomsFilename)
     {
         map<string, Room*> roomMap;
         for (auto& floor : _rooms)
@@ -171,14 +176,57 @@ namespace Zork
                 roomMap[room.Name()] = &room;
             }
         }
-        roomMap.at("Foyer"s)->SetDescription("There's a coat hook on the wall."s);
-        roomMap.at("Kitchen"s)->SetDescription("You see a tidy, cozy kitchen."s);
-        roomMap.at("Dining Room"s)->SetDescription("You see a table set for dinner."s);
-        roomMap.at("Living Room"s)->SetDescription("You are in the living room."s);
-        roomMap.at("Bedroom"s)->SetDescription("You see a bed, a dresser, and a mirror."s);
-        roomMap.at("Bathroom"s)->SetDescription("You are in the bathroom. You see a toilet and a vanity."s);
-        roomMap.at("Game Room"s)->SetDescription("There is a chess set on a table with two chairs on either side."s);
-        roomMap.at("Laundry Room"s)->SetDescription("You see a washer and dryer."s);
-        roomMap.at("Porch"s)->SetDescription("A rubber mat saying 'Welcome to Zork! lies by the door."s);
+
+        ifstream file;
+        file.exceptions(ifstream::failbit | ifstream::badbit);
+        file.open(roomsFilename);
+
+
+        Json::Value root;
+        file >> root;
+        assert(root.isArray());
+
+        for (const Json::Value& floor : root)
+        {
+            assert(floor.isArray());
+            for (const Json::Value& room : floor)
+            {
+                assert(room.isObject());
+                auto entry = roomMap.find(room["Name"].asString());
+                if (entry == roomMap.end())
+                {
+                    throw runtime_error("Invalid room specified");
+                }
+
+                const string description = room["Description"].asString();
+                entry->second->SetDescription(description);
+            }
+        }
+
+        //old imlementation using Rooms.txt, a pound-delimited text file
+
+        /*const char fieldDelimiter = '#';
+        ifstream file;
+        file.exceptions(ifstream::failbit | ifstream::badbit);
+        file.open(roomsFilename);
+        string line;
+        while (!file.eof())
+        {
+            getline(file, line);
+            vector<string> fields = Utility::split(line, fieldDelimiter);
+            assert(fields.size() == 2);
+            //assert halts the application if the condition is not true ( only functions in debug mode, cannot hurt in release mode) 
+        
+            const string& roomName = fields[0];
+            
+            auto entry = roomMap.find(roomName);
+            if (entry == roomMap.end())
+            {
+                throw runtime_error("invalid room specified");
+            }
+        
+            entry->second->SetDescription(fields[1]);
+        }
+        */
     }
 }

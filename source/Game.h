@@ -19,7 +19,7 @@ namespace Zork
 	class Game final
 	{
 	public:
-		Game();
+		Game(const std::string& roomsFilename);
 		bool Move(Commands command);
 		void Run();
 		const Room& CurrentRoom() const;
@@ -35,7 +35,7 @@ namespace Zork
 			{ Room("Game Room"), Room("Laundry Room"), Room("Porch") },
 			}};
 
-		void InitializeDescriptions();
+		void InitializeDescriptions(const std::string& roomsFilename);
 
 		static std::random_device _randomDevice;
 		static std::default_random_engine _randomGenerator;
